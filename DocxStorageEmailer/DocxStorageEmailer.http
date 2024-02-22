@@ -1,0 +1,6 @@
+@DocxStorageEmailer_HostAddress = http://localhost:5119
+
+GET {{DocxStorageEmailer_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
