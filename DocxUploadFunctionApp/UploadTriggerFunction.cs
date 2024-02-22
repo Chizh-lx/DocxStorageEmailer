@@ -17,7 +17,7 @@ namespace DocxUploadFunctionApp
         }
 
         [Function(nameof(UploadTriggerFunction))]
-        public async Task Run([BlobTrigger("files/{name}", Connection = "DefaultEndpointsProtocol=https;AccountName=reenbitteststorage;AccountKey=aVqk69tuAv37G4YtG16C/zDGmYhchfAE4msgZknoC9sYcukHnL8S0f2DXkxPYc5EU6q5vFPx5uEA+AStPLfiYA==;EndpointSuffix=core.windows.net")] Stream stream, string name)
+        public async Task Run([BlobTrigger("%ContainerName%", Connection = "AzureWebJobsStorage")] Stream stream, string name)
         {
             using var blobStreamReader = new StreamReader(stream);
             var content = await blobStreamReader.ReadToEndAsync();
@@ -25,9 +25,9 @@ namespace DocxUploadFunctionApp
 
             var message = new MimeMessage();
 
-            message.From.Add(new MailboxAddress("Test Project", "mslvzn@gmail.com"));
+            message.From.Add(new MailboxAddress("Test Project", "oleksii.chipizhenko@gmail.com"));
 
-            message.To.Add(new MailboxAddress("Oleksii", "oleksii.chipizhenko@gmail.com"));
+            message.To.Add(new MailboxAddress("Oleksii", "mslvzn@gmail.com"));
 
             message.Subject = "Your email uploaded";
 
@@ -38,10 +38,10 @@ namespace DocxUploadFunctionApp
             };
 
             var client = new SmtpClient();
+
             client.Connect("smtp.gmail.com", 587, false);
 
-
-            client.Authenticate("mslvzn@gmail.com", "katl xydv eoex eray");
+            client.Authenticate("oleksii.chipizhenko@gmail.com", "katl xydv eoex eray");
 
             client.Send(message);
 

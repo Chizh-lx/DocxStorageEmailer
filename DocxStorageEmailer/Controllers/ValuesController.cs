@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Mvc;
+using MimeKit;
 using System;
 using System.IO;
 
