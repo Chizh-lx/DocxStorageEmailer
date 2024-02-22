@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "DocxUploadFunctionApp": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7009",
+      "launchBrowser": false
+    }
+  }
+}
