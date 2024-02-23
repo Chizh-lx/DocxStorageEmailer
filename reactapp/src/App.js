@@ -46,7 +46,7 @@ const FormComponent = () => {
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await axios.post('https://localhost:7159/api/Values', formData, {
+      const response = await axios.post('https://docxuploadnotify.azurewebsites.net/api/Values', formData, {
           headers: {  
               'Content-Type': 'multipart/form-data'
           },
