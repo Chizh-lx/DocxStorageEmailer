@@ -45,11 +45,13 @@ const FormComponent = () => {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('email', email);
 
       const response = await axios.post('https://localhost:7159/api/Values', formData, {
           headers: {  
               'Content-Type': 'multipart/form-data'
+          },
+          params: {
+            email
           }
       });
 

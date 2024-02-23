@@ -1,6 +1,7 @@
 ﻿using Azure.Storage;
 using Azure.Storage.Blobs;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace DocxStorageEmailer
 {
