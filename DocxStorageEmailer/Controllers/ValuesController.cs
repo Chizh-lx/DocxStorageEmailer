@@ -1,8 +1,12 @@
-﻿using MailKit.Net.Smtp;
+﻿using Azure.Storage.Blobs;
+using Azure;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Mvc;
 using MimeKit;
 using System;
 using System.IO;
+using Microsoft.AspNetCore.Http.HttpResults;
+using System.ComponentModel.DataAnnotations;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -20,12 +24,12 @@ namespace DocxStorageEmailer.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Upload(IFormFile file)
+        public async Task<IActionResult> Upload(IFormFile file, string email)
         {
             string formatChecker = System.IO.Path.GetExtension(file.FileName);
             if (file != null && formatChecker == ".docx")
             {
-                var result = await _fileService.UploadAsync(file);
+                var result = await _fileService.UploadAsync(file, email);
                 return Ok(result);
             }
             else

@@ -1,5 +1,6 @@
 ﻿using Azure.Storage;
 using Azure.Storage.Blobs;
+using System.ComponentModel.DataAnnotations;
 
 namespace DocxStorageEmailer
 {
@@ -17,8 +18,7 @@ namespace DocxStorageEmailer
             _filesContainer = blobServiceClient.GetBlobContainerClient("files");
         }
 
-
-        public virtual async Task<BlobResponseDto> UploadAsync(IFormFile blob)
+        public virtual async Task<BlobResponseDto> UploadAsync(IFormFile blob, string email)
         {
             BlobResponseDto response = new();
             BlobClient client = _filesContainer.GetBlobClient(blob.FileName);
@@ -28,10 +28,15 @@ namespace DocxStorageEmailer
                 await client.UploadAsync(data);
             }
 
+            IDictionary<string, string> metadata = new Dictionary<string, string>();
+            metadata.Add("email", email.ToString());
+            await client.SetMetadataAsync(metadata);
+
             response.Status = $"File {blob.FileName} Upload Done";
             response.Error = false;
             response.Blob.Url = client.Uri.AbsoluteUri;
             response.Blob.Name = client.Name;
+            
 
             return response;
         }

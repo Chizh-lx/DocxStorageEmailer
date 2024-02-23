@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css'; // Імпорт CSS файлу
+import './App.css';
 import axios from 'axios';
 
 const FormComponent = () => {
@@ -16,7 +16,7 @@ const FormComponent = () => {
     }
   };
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event) => { 
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
 
@@ -28,27 +28,27 @@ const FormComponent = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Валідація поля електронної пошти
     if (!email) {
       setEmailError('Поле електронної пошти обов\'язкове');
+      return;
     }
 
-    // Валідація завантаженого файлу
     if (!file) {
       setFileError('Поле файлу обов\'язкове');
+      return;
     }
 
     if (!email || !file) {
       return;
     }
 
-    // Відправка даних на сервер або подальша обробка
     try {
       const formData = new FormData();
       formData.append('file', file);
+      formData.append('email', email);
 
       const response = await axios.post('https://localhost:7159/api/Values', formData, {
-          headers: {
+          headers: {  
               'Content-Type': 'multipart/form-data'
           }
       });
