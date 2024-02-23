@@ -8,7 +8,7 @@ namespace DocxStorageEmailer
     public class FileService
     {
         private readonly string _storageAccount = "reenbitteststorage";
-        private readonly string _key = "aVqk69tuAv37G4YtG16C/zDGmYhchfAE4msgZknoC9sYcukHnL8S0f2DXkxPYc5EU6q5vFPx5uEA+AStPLfiYA==";
+        private readonly string _key = "jse+7c8v/P9yeWdob2GgSTrJAUBcGqnpn6H1Y29mVyXSE8SQU3BG9oSQB8cJftzCQCQRNx+vMKVl+AStRoWE4Q==";
         private readonly BlobContainerClient _filesContainer;
 
         public FileService()
