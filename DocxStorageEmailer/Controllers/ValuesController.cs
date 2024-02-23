@@ -37,11 +37,5 @@ namespace DocxStorageEmailer.Controllers
                 return BadRequest("Not a docx file!");
             }
         }
-
-        [HttpGet]
-        public async Task<IActionResult> Test()
-        {
-            return Ok();
-        }
     }
 }
