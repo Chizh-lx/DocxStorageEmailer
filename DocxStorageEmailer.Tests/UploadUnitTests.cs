@@ -31,10 +31,10 @@ namespace DocxStorageEmailer.Tests
             fileMock.Setup(_ => _.FileName).Returns("test.docx");
             fileMock.Setup(_ => _.OpenReadStream()).Returns(new MemoryStream());
 
-            _mockFileService.Setup(s => s.UploadAsync(It.IsAny<IFormFile>())).ReturnsAsync(new BlobResponseDto());
+            _mockFileService.Setup(s => s.UploadAsync(It.IsAny<IFormFile>(), It.IsAny<string>())).ReturnsAsync(new BlobResponseDto());
 
             // Act
-            var result = await _controller.Upload(fileMock.Object) as OkObjectResult;
+            var result = await _controller.Upload(fileMock.Object, "mslvzn@gmail.com") as OkObjectResult;
 
             // Assert
             Xunit.Assert.NotNull(result);
@@ -50,7 +50,7 @@ namespace DocxStorageEmailer.Tests
             fileMock.Setup(_ => _.FileName).Returns("test.txt"); // Not a docx file
 
             // Act
-            var result = await _controller.Upload(fileMock.Object) as BadRequestObjectResult;
+            var result = await _controller.Upload(fileMock.Object, "mslvzn@gmail.com") as BadRequestObjectResult;
 
             // Assert
             Xunit.Assert.NotNull(result);
