@@ -34,7 +34,7 @@ namespace DocxUploadFunctionApp
             var content = await blobStreamReader.ReadToEndAsync();
             _logger.LogInformation($"C# Blob trigger function Processed blob\n Name: {name} \n Data: {content}");
 
-            try
+            string CreateUriSasToken()
             {
                 var blobServiceClient = new BlobServiceClient(Environment.GetEnvironmentVariable("AzureWebJobsStorage"));
                 var blobContainerClient = blobServiceClient.GetBlobContainerClient("files");
@@ -53,9 +53,11 @@ namespace DocxUploadFunctionApp
 
                 var sasQueryParameters = sasBuilder.ToSasQueryParameters(new StorageSharedKeyCredential(blobServiceClient.AccountName, Environment.GetEnvironmentVariable("AzureWebJobsStorageKey")));
                 var blobUriWithSas = blobClient.Uri + "?" + sasQueryParameters;
+                return blobUriWithSas;
+            }
 
-                ///------------
-
+            void SendEmailMessage(string UriSas)
+            {
                 var message = new MimeMessage();
 
                 string subjectTo = metaData.Values.First();
@@ -69,7 +71,7 @@ namespace DocxUploadFunctionApp
                 message.Body = new TextPart("plain")
 
                 {
-                    Text = blobUriWithSas,
+                    Text = UriSas,
                 };
 
                 var client = new SmtpClient();
@@ -81,6 +83,15 @@ namespace DocxUploadFunctionApp
                 client.Send(message);
 
                 client.Disconnect(true);
+            }
+
+            try
+            {
+                string UriSas = CreateUriSasToken();
+
+                ///------------
+
+                SendEmailMessage(UriSas);
             }
             catch (Exception ex)
             {
